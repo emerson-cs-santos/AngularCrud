@@ -1,0 +1,84 @@
+<mat-card class="page-card">
+  <h2>Gêneros</h2>
+
+  <button class="botaoAdd" mat-fab color="primary" (click) = "new()" matTooltip="Criar novo gênero">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <button class="botaoAtualizar" mat-button color="primary" (click) = "listar()" matTooltip="Atualizar dados da tabela">
+    <mat-icon>refresh</mat-icon>
+  </button>
+
+  <mat-slide-toggle class="loadInit" [(ngModel)]="isChecked" (click) = "saveOption()" matTooltip="Definir se ao abrir a página será carregado automaticamente os dados da tabela.">Carregar dados ao abrir</mat-slide-toggle>
+
+  <div>
+    <mat-table [dataSource]="generos" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="nome">
+        <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+        <mat-cell *matCellDef="let genero"> {{genero.nome}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="icone">
+        <mat-header-cell *matHeaderCellDef> Ícone </mat-header-cell>
+        <mat-cell *matCellDef="let genero"> <mat-icon color="accent">{{genero.icone}}</mat-icon> </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="acoes">
+        <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
+          <mat-cell *matCellDef="let genero">
+
+            <button mat-button color="primary" (click) = "remover(genero._id)" matTooltip="Apagar">
+              <mat-icon>delete</mat-icon>
+            </button>
+
+            <button mat-button color="primary" (click) = "selecionar(genero)" matTooltip="Editar">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+          </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="colunas"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: colunas;"></mat-row>
+    </mat-table>
+  </div>
+
+  <div *ngIf="generoSelecionado" class="mt">
+    <h2>Inserir / Editar</h2>
+
+    <mat-form-field class="formItem">
+      <mat-label>Nome*</mat-label>
+      <input #nome matInput placeholder="Exemplo: Survival Horror" [(ngModel)] = "generoSelecionado.nome" [formControl]="generoValidator" [errorStateMatcher]="matcher">
+
+      <!-- <mat-hint>Nome deve ter pelo menos 3 caracteres!</mat-hint> -->
+
+      <mat-error *ngIf="generoValidator.invalid">
+        Campo <strong>obrigatório!</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="formItem mt1">
+      <mat-label >Ícone*</mat-label>
+      <mat-select [(ngModel)] = "generoSelecionado.icone" [formControl]="corValidator" [errorStateMatcher]="matcher">
+        <mat-option [value]="corItem" *ngFor="let corItem of corItens"> {{corItem}}</mat-option>
+      </mat-select>
+
+      <mat-error *ngIf="corValidator.invalid">
+        Campo <strong>obrigatório!</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <div>
+      <button class="mt btnAcao" mat-raised-button color="primary" (click) = "cancelar()" >
+        Cancelar
+      </button>
+
+      <button class="btnAcao" mat-raised-button color="accent" (click) = "salvar()" >
+        Salvar
+      </button>
+    </div>
+
+  </div>
+
+</mat-card>

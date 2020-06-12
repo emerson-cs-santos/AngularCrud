@@ -1,0 +1,44 @@
+.botaoAtualizar
+{
+  position: absolute;
+  margin-right: 10px;
+  margin-top: 15px;
+  right: 0;
+  top: 0;
+}
+
+.loadInit
+{
+  position: absolute;
+  margin-left: 10px;
+  margin-top: 25px;
+  left: 0;
+  top: 0;
+}
+
+.botaoAdd
+{
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+}
+
+.formItem
+{
+  width: 80%;
+}
+
+.mt
+{
+  margin-top: 15px;
+}
+
+.mt1
+{
+  margin-top: 3px;
+}
+
+.btnAcao
+{
+  margin-right: 10px;
+}
