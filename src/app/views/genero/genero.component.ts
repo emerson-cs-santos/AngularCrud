@@ -60,24 +60,91 @@ export class GeneroComponent implements OnInit
     this.corItens.push('sports_esports');
     this.corItens.push('sports_soccer');
     this.corItens.push('casino');
+
+    this.cargaInicial();
+  }
+
+  cargaInicial(): void
+  {
+    const generoCargaInicial = localStorage.getItem('generoCargaInicial');
+
+    if ( generoCargaInicial !== 'ok')
+    {
+      let idCount = 0;
+      let arrayCount = 0;
+
+      const novoGenArray = new Array<Genero>();
+      const novoGen = new Genero();
+
+
+      // Item 1
+      novoGen._id = idCount++;
+      novoGen.nome = 'Plataforma';
+      novoGen.icone = 'games';
+
+      novoGenArray.push(novoGen);
+      this.generoService.insert( novoGenArray[arrayCount] );
+      arrayCount++;
+
+
+      // Item 2
+      novoGen._id = idCount++;
+      novoGen.nome = 'Luta';
+      novoGen.icone = 'videogame_asset';
+
+      novoGenArray.push(novoGen);
+      this.generoService.insert( novoGenArray[arrayCount] );
+      arrayCount++;
+
+      // Item 3
+      novoGen._id = idCount++;
+      novoGen.nome = 'FPS';
+      novoGen.icone = 'sports_esports';
+
+      novoGenArray.push(novoGen);
+      this.generoService.insert( novoGenArray[arrayCount] );
+      arrayCount++;
+
+      // Item 4
+      novoGen._id = idCount++;
+      novoGen.nome = 'Futebol';
+      novoGen.icone = 'sports_soccer';
+
+      novoGenArray.push(novoGen);
+      this.generoService.insert( novoGenArray[arrayCount] );
+      arrayCount++;
+
+      // Item 5
+      novoGen._id = idCount++;
+      novoGen.nome = 'Cartas';
+      novoGen.icone = 'casino';
+
+      novoGenArray.push(novoGen);
+      this.generoService.insert( novoGenArray[arrayCount] );
+      arrayCount++;
+
+
+      localStorage.setItem('generoCargaInicial', 'ok');
+
+      this.isChecked = true;
+      localStorage.setItem('carregar', 'sim' );
+      this.listar();
+    }
   }
 
   listar(): void
   {
     // => arrow function
-    this.generoService.listar().subscribe(generos => {
-      this.generos = generos;
-    });
+    this.generos = this.generoService.list();
   }
 
-  remover(id: string): void
+  remover(id: number): void
   {
     if (confirm('Tem certeza?'))
     {
-      this.generoService.remover(id).subscribe( () => {
-        alert('Gênero removido!');
-        this.listar();
-      });
+      this.generoService.remove(id);
+      this.cancelar();
+      this.listar();
     }
   }
 
@@ -102,19 +169,14 @@ export class GeneroComponent implements OnInit
     {
       if( this.inserindo )
       {
-        this.generoService.inserir( this.generoSelecionado ).subscribe( () => {
-          alert('Gênero inserido!');
-          this.listar();
-        });
+        this.generoService.insert( this.generoSelecionado );
       }
       else
       {
-        this.generoService.atualizar( this.generoSelecionado ).subscribe( () => {
-          alert('Gênero atualizado!');
-          this.listar();
-        });
+        this.generoService.update( this.generoSelecionado );
       }
       this.generoSelecionado = null;
+      this.listar();
     }
   }
 

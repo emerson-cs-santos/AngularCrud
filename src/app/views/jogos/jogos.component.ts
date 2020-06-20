@@ -65,9 +65,7 @@ export class JogosComponent implements OnInit
     }
 
 
-    this.generoService.listar().subscribe(generos => {
-      this.generosLista = generos;
-    });
+    this.generosLista = this.generoService.list();
 
     this.avaliacaoItens.push('Ruim');
     this.avaliacaoItens.push('Ok');
@@ -76,24 +74,126 @@ export class JogosComponent implements OnInit
     this.statusItens.push('Quero');
     this.statusItens.push('Tenho');
     this.statusItens.push('Zerado');
+
+    this.cargaInicial();
   }
+
+
+  cargaInicial(): void
+  {
+    const jogoCargaInicial = localStorage.getItem('jogoCargaInicial');
+
+    if ( jogoCargaInicial !== 'ok')
+    {
+      let idCount = 0;
+      let arrayCount = 0;
+
+      const novoJogoArray = new Array<Jogo>();
+      const novoJogo = new Jogo();
+
+
+      // Item 1
+      novoJogo._id = idCount++;
+      novoJogo.nome = 'Mario';
+      novoJogo.genero = 'Plataforma';
+      novoJogo.avaliacao = 'Legal';
+      novoJogo.status = 'Zerado';
+
+      novoJogoArray.push(novoJogo);
+      this.jogoService.insert( novoJogoArray[arrayCount] );
+      arrayCount++;
+
+      // Item 2
+      novoJogo._id = idCount++;
+      novoJogo.nome = 'Yu-Gi-Oh!';
+      novoJogo.genero = 'Cartas';
+      novoJogo.avaliacao = 'Ok';
+      novoJogo.status = 'Tenho';
+
+      novoJogoArray.push(novoJogo);
+      this.jogoService.insert( novoJogoArray[arrayCount] );
+      arrayCount++;
+
+      // Item 3
+      novoJogo._id = idCount++;
+      novoJogo.nome = 'Magic';
+      novoJogo.genero = 'Cartas';
+      novoJogo.avaliacao = 'Ok';
+      novoJogo.status = 'Quero';
+
+      novoJogoArray.push(novoJogo);
+      this.jogoService.insert( novoJogoArray[arrayCount] );
+      arrayCount++;
+
+      // Item 4
+      novoJogo._id = idCount++;
+      novoJogo.nome = 'Fifa';
+      novoJogo.genero = 'Futebol';
+      novoJogo.avaliacao = 'Ruim';
+      novoJogo.status = 'Zerado';
+
+      novoJogoArray.push(novoJogo);
+      this.jogoService.insert( novoJogoArray[arrayCount] );
+      arrayCount++;
+
+      // Item 5
+      novoJogo._id = idCount++;
+      novoJogo.nome = 'The King of Fighters';
+      novoJogo.genero = 'Luta';
+      novoJogo.avaliacao = 'ok';
+      novoJogo.status = 'Zerado';
+
+      novoJogoArray.push(novoJogo);
+      this.jogoService.insert( novoJogoArray[arrayCount] );
+      arrayCount++;
+
+      // Item 6
+      novoJogo._id = idCount++;
+      novoJogo.nome = 'Black';
+      novoJogo.genero = 'FPS';
+      novoJogo.avaliacao = 'Legal';
+      novoJogo.status = 'Zerado';
+
+      novoJogoArray.push(novoJogo);
+      this.jogoService.insert( novoJogoArray[arrayCount] );
+      arrayCount++;
+
+      // Item 7
+      novoJogo._id = idCount++;
+      novoJogo.nome = 'DOOM';
+      novoJogo.genero = 'FPS';
+      novoJogo.avaliacao = 'Legal';
+      novoJogo.status = 'Quero';
+
+      novoJogoArray.push(novoJogo);
+      this.jogoService.insert( novoJogoArray[arrayCount] );
+      arrayCount++;
+
+
+
+      localStorage.setItem('jogoCargaInicial', 'ok');
+
+      this.isChecked = true;
+      localStorage.setItem('carregarJogos', 'sim' );
+      this.listar();
+    }
+  }
+
+
 
   listar(): void
   {
     // => arrow function
-    this.jogoService.listar().subscribe(jogos => {
-      this.jogos = jogos;
-    });
+    this.jogos = this.jogoService.list();
   }
 
-  remover(id: string): void
+  remover(id: number): void
   {
     if (confirm('Tem certeza?'))
     {
-      this.jogoService.remover(id).subscribe( () => {
+        this.jogoService.remove(id);
         alert('Jogo removido!');
         this.listar();
-      });
     }
   }
 
@@ -118,18 +218,13 @@ export class JogosComponent implements OnInit
     {
       if( this.inserindo )
       {
-        this.jogoService.inserir( this.jogoSelecionado ).subscribe( () => {
-          alert('Jogo inserido!');
-          this.listar();
-        });
+          this.jogoService.insert( this.jogoSelecionado );
       }
       else
       {
-        this.jogoService.atualizar( this.jogoSelecionado ).subscribe( () => {
-          alert('Jogo atualizado!');
-          this.listar();
-        });
+          this.jogoService.update( this.jogoSelecionado );
       }
+      this.listar();
       this.jogoSelecionado = null;
     }
 

@@ -1,6 +1,6 @@
 export class Genero
 {
-  _id: string;
+  _id: number;
   nome: string;
   icone: string;
 }

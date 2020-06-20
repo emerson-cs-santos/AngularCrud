@@ -1,6 +1,6 @@
 export class Jogo
 {
-  _id: string;
+  _id: number;
   nome: string;
   genero: string;
   avaliacao: string;
