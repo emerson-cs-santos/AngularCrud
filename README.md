@@ -8,4 +8,4 @@ Trabalho de Sistemas para Internet utilizando angular.
 O cadastro utiliza o local storage.
 
 ## Aplicação 
-Está online: [GitHub Pages](https://crudcrud.netlify.app/)
+Está online: [Portal de Jogos](https://crudcrud.netlify.app/)
