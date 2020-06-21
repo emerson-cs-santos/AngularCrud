@@ -13,9 +13,7 @@ export class GeneroService
 
   private generoGerarId = new Array<Genero>();
 
-  constructor() {
-
-   }
+  constructor() { }
 
   insert(gen: Genero): void
   {
