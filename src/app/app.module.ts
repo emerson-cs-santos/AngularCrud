@@ -29,13 +29,15 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SobreComponent } from './views/sobre/sobre.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { AudioComponent } from './audio/audio.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     JogosComponent,
     GeneroComponent,
-    SobreComponent
+    SobreComponent,
+    AudioComponent
   ],
   imports: [
     BrowserModule,
